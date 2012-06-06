@@ -12,10 +12,12 @@ What has been done :
 * the test suite has been updated to use the new query methods
 * the test suite pass for all the features that have been ported
 * this README has been updated for what is working and tested
+* Added bugfix for syntax errors when not using the default column names for ActsAsMappaple. [jb]
 
 What hasn't been done (yet) :
 
 * make it possible to use the `where` scope with a clause on the distance column
+  (but there is a workaround: Use `#{Model.distance_sql}` in your `where` clause) [jb]
 * port the IpGeocodeLookup module (the test suite is disabled)
 * obviously, make the test suite pass for all the features that have not been ported yet
 * update this README to reflect other changes that could have appeared with Rails 3
