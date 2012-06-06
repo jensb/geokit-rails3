@@ -269,7 +269,7 @@ module Geokit
       # to the database in use.
       def flat_distance_sql(origin, units)
         lat_degree_units = units_per_latitude_degree(units)
-        lng_degree_units = units_per_longitude_degree(origin.send :"#{lat_column_name}", units)
+        lng_degree_units = units_per_longitude_degree(origin.send(:"#{lat_column_name}"), units)
 
         adapter.flat_distance_sql(origin, lat_degree_units, lng_degree_units)
       end
@@ -282,8 +282,8 @@ module Geokit
       geo=Geokit::Geocoders::MultiGeocoder.geocode(address)
 
       if geo.success
-        self.send("#{lat_column_name}=", geo.send :"#{lat_column_name}")
-        self.send("#{lng_column_name}=", geo.send :"#{lng_column_name}")
+        self.send("#{lat_column_name}=", geo.send(:"#{lat_column_name}"))
+        self.send("#{lng_column_name}=", geo.send(:"#{lng_column_name}"))
       else
         errors.add(auto_geocode_field, auto_geocode_error_message)
       end
