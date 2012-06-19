@@ -258,8 +258,10 @@ module Geokit
       # Returns the distance SQL using the spherical world formula (Haversine).  The SQL is tuned
       # to the database in use.
       def sphere_distance_sql(origin, units)
-        lat = deg2rad(origin.send :"#{lat_column_name}")
-        lng = deg2rad(origin.send :"#{lng_column_name}")
+        # "origin" can be a Geokit::LatLng (with :lat and :lng methos), e.g. when using geo_scope
+        # or it can be an ActsAsMappable with customized latitude and longitude methods, e.g. when using distance_sql.
+        lat = deg2rad(origin.respond_to?(:lat) ? origin.lat : origin.send(:"#{lat_column_name}"))
+        lng = deg2rad(origin.respond_to?(:lng) ? origin.lng : origin.send(:"#{lng_column_name}"))
         multiplier = units_sphere_multiplier(units)
 
         adapter.sphere_distance_sql(lat, lng, multiplier) if adapter
